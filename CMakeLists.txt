@@ -7,4 +7,4 @@ set(SOURCE_LIB
     library/commonUtils/numericOperations.c
 )
 add_library(library ${SOURCE_LIB})
-add_executable(spbu_c_homeworks task1.2.c)
+add_executable(spbu_c_homeworks homework1/task1.2.c)
