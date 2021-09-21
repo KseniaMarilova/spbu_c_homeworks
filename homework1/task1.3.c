@@ -7,7 +7,6 @@ void swap(int* a, int* b)
     *b = c;
 }
 
-
 int main()
 {
     int n = 0, m = 0;
@@ -25,4 +24,3 @@ int main()
         printf("%d ", array[i]);
     free(array);
 }
-
