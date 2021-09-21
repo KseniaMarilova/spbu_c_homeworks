@@ -2,13 +2,13 @@
 
 void outputPrimeNumbers(int highestNumber)
 {
-    int* is—omposite = calloc(highestNumber + 1, sizeof(int));
+    int* isComposite = calloc(highestNumber + 1, sizeof(int));
     int div = 2;
     while (div <= highestNumber) {
         for (int i = 2 * div; i <= highestNumber; i += div)
-            is—omposite[i] = 1;
+            isComposite[i] = 1;
         div++;
-        while (is—omposite[div])
+        while (isComposite[div])
             div++;
     }
     printf("Prime numbers not exceeding %d: \n", highestNumber);
