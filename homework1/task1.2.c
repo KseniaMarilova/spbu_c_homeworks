@@ -15,15 +15,15 @@ int main()
     scanf("%d", &size);
     int *array = calloc(size, sizeof(int));
     printf("Input %d integers\n", size);
-    for(int i = 0; i < size; i++)
+    for (int i = 0; i < size; i++)
         scanf("%d", &array[i]);
     int max = array[0];
     int isFound = 0;
     for (int i = 1; i < size; i++) {
-      if ((array[i] >= max) && (isRepeat(array, size, i))) {
-          max = array[i];
-          isFound = 1;
-      }
+        if ((array[i] >= max) && (isRepeat(array, size, i))) {
+            max = array[i];
+            isFound = 1;
+        }
     }
     if (isFound)
         printf("maximum value, repeated more than 1 time: %d", max);
