@@ -13,7 +13,7 @@ int main()
     printf("Input size of array\n");
     int size = 0;
     scanf("%d", &size);
-    int *array = calloc(size, sizeof(int));
+    int* array = calloc(size, sizeof(int));
     printf("Input %d integers\n", size);
     for (int i = 0; i < size; i++)
         scanf("%d", &array[i]);
