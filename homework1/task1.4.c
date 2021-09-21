@@ -13,9 +13,9 @@ void outputPrimeNumbers(int highestNumber)
     }
     printf("Prime numbers not exceeding %d: \n", highestNumber);
     for (int i = 2; i <= highestNumber; i++)
-        if (!isÑomposite[i])
+        if (!isComposite[i])
             printf("%d ", i);
-    free(isÑomposite);
+    free(isComposite);
 }
 
 int main()
