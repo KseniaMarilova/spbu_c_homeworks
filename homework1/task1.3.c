@@ -13,8 +13,8 @@ int main()
     int n = 0, m = 0;
     printf("Input intgers m, n \n");
     scanf("%d%d", &m, &n);
-    int *array = calloc(n+m, sizeof(int));
-    printf("Input %d integers\n", n+m);
+    int* array = calloc(n + m, sizeof(int));
+    printf("Input %d integers\n", n + m);
     for (int i = 0; i < n + m; i++)
         scanf("%d", &array[i]);
     for (int i = m - 1; i >= 0; i--)
