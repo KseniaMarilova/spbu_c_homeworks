@@ -5,7 +5,7 @@ void printLeft(int left[], int* size, int* stage)
     for (int i = 0; i < (*size - *stage) / 2; i++) {
         printf("%5d", left[i]);
         left[i]--;
-     }
+    }
 }
 void printRight(int right[], int* size, int* stage)
 {
@@ -37,7 +37,7 @@ int main()
     stage = 3;
     while (stage <= size) {
         printLeft(left, &size, &stage);
-        for(int i = stage - 1; i >= 0; i--)
+        for (int i = stage - 1; i >= 0; i--)
             printf("%5d", stage * (stage - 3) + 3 + i);
         printRight(right, &size, &stage);
         stage += 2;
