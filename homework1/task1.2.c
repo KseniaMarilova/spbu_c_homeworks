@@ -1,6 +1,6 @@
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 bool isRepeat(int array[], int size, int i)
 {
@@ -10,7 +10,8 @@ bool isRepeat(int array[], int size, int i)
     return false;
 }
 
-int getMaximumRepeatedElement(int array[], int size) {
+int getMaximumRepeatedElement(int array[], int size)
+{
     int max = array[0];
     int maxIndex = 0;
     bool isFound = false;
