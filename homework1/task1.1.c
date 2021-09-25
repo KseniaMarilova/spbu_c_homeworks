@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-int getQuotient(int divident, int divisor) {
+int getQuotient(int divident, int divisor)
+{
     int quotient = 0;
     int absDivident = abs(divident);
     int absDivisor = abs(divisor);
