@@ -47,7 +47,7 @@ int main()
     int size = 0;
     printf("Input odd number \n");
     scanf("%d", &size);
-    printf("Numbers from 1 to %d in a spiral: \n", size*size);
+    printf("Numbers from 1 to %d in a spiral: \n", size * size);
     int* left = calloc(size / 2 + 1, sizeof(int));
     int* right = calloc(size / 2 + 1, sizeof(int));
     printTop(left, right, size);
