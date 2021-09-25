@@ -1,5 +1,6 @@
 #include <stdbool.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 void findPrimeNumbers(bool isPrime[], int highestNumber)
 {
