@@ -1,20 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+int getQuotient(int divident, int divisor) {
+    int quotient = 0;
+    int absDivident = abs(divident);
+    int absDivisor = abs(divisor);
+    while (absDivident >= absDivisor) {
+        absDivident = absDivident - absDivisor;
+        quotient++;
+    }
+    if (divident < 0)
+        quotient = -1 * quotient - 1;
+    if (divisor < 0)
+        quotient = -1 * quotient;
+    return quotient;
+}
+
 int main()
 {
-    printf("Input 2 integer numbers a, b \n");
-    int a = 0, b = 0;
-    scanf("%d%d", &a, &b);
-    int r = 0;
-    int absA = abs(a);
-    int absB = abs(b);
-    while (absA >= absB) {
-        absA = absA - absB;
-        r++;
-    }
-    if (a < 0)
-        r = -1 * r - 1;
-    if (b < 0)
-        r = -1 * r;
-    printf("Incomplete quotient of a, b: %d", r);
+    int divident = 0, divisor = 0;
+    printf("Input 2 integer numbers \n");
+    scanf("%d %d", &divident, &divisor);
+    int quotient = getQuotient(divident, divisor);
+    printf("Incomplete quotient of %d and %d: %d", divident, divisor, quotient);
+    return 0;
 }
