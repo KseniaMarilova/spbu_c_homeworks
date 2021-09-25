@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 
 void swap(int* a, int* b)
 {
@@ -7,20 +8,27 @@ void swap(int* a, int* b)
     *b = c;
 }
 
+void swapSegments(int array[], int startLength, int endLength)
+{
+    for (int i = startLength - 1; i >= 0; i--)
+        for (int j = i; j < i + endLength; j++)
+            swap(&array[j], &array[j + 1]);
+}
 int main()
 {
-    int n = 0, m = 0;
-    printf("Input intgers m, n \n");
-    scanf("%d%d", &m, &n);
-    int* array = calloc(n + m, sizeof(int));
-    printf("Input %d integers\n", n + m);
-    for (int i = 0; i < n + m; i++)
+    int startLength = 0;
+    int endLength = 0;
+    printf("Input 2 integer numbers: length of starting segment, length of ending segment \n");
+    scanf("%d%d", &startLength, &endLength);
+    int arraySize = startLength + endLength;
+    int* array = calloc(arraySize, sizeof(int));
+    printf("Input %d integers\n", arraySize);
+    for (int i = 0; i < arraySize; i++)
         scanf("%d", &array[i]);
-    for (int i = m - 1; i >= 0; i--)
-        for (int j = i; j < i + n; j++)
-            swap(&array[j], &array[j + 1]);
-    printf("Start of array of length %d and end of length %d were swapped: \n", m, n);
-    for (int i = 0; i < n + m; i++)
+    swapSegments(array, startLength, endLength);
+    printf("Start of array of length %d and end of length %d were swapped: \n", startLength, endLength);
+    for (int i = 0; i < arraySize; i++)
         printf("%d ", array[i]);
     free(array);
+    return 0;
 }
