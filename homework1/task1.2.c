@@ -1,11 +1,30 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
 
-int isRepeat(int array[], int size, int i)
+bool isRepeat(int array[], int size, int i)
 {
     for (int j = 0; j < i; j++)
         if (array[j] == array[i])
-            return 1;
-    return 0;
+            return true;
+    return false;
+}
+
+int getMaximumRepeatedElement(int array[], int size) {
+    int max = array[0];
+    int maxIndex = 0;
+    bool isFound = false;
+    for (int i = 1; i < size; i++) {
+        if ((array[i] >= max) && (isRepeat(array, size, i))) {
+            max = array[i];
+            maxIndex = i;
+            isFound = true;
+        }
+    }
+    if (isFound)
+        return maxIndex;
+    else
+        return -1;
 }
 
 int main()
@@ -17,17 +36,12 @@ int main()
     printf("Input %d integers\n", size);
     for (int i = 0; i < size; i++)
         scanf("%d", &array[i]);
-    int max = array[0];
-    int isFound = 0;
-    for (int i = 1; i < size; i++) {
-        if ((array[i] >= max) && (isRepeat(array, size, i))) {
-            max = array[i];
-            isFound = 1;
-        }
-    }
-    if (isFound)
-        printf("maximum value, repeated more than 1 time: %d", max);
+    int maxIndex = 0;
+    maxIndex = getMaximumRepeatedElement(array, size);
+    if (maxIndex >= 0)
+        printf("maximum value, repeated more than 1 time: %d", array[maxIndex]);
     else
         printf("there are no repeated elements in the array");
     free(array);
+    return 0;
 }
