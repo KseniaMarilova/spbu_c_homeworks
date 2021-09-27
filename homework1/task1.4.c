@@ -9,7 +9,7 @@ void findPrimeNumbers(bool isPrime[], int highestNumber)
         for (int i = 2 * div; i <= highestNumber; i += div)
             isPrime[i] = false;
         div++;
-        while (!isPrime[div])
+        while ((div <= highestNumber) && (!isPrime[div]))
             div++;
     }
 }
