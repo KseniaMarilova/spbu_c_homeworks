@@ -10,3 +10,4 @@ add_library(library ${SOURCE_LIB})
 
 add_executable(task1.1 homework1/task1.1.c)
 add_executable(task1.2 homework1/task1.2.c)
+add_executable(task1.3 homework1/task1.3.c)
