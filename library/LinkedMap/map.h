@@ -3,6 +3,7 @@
 #define UNTITLED4_MAP_H
 
 #include <stdbool.h>
+#include <stdio.h>
 
 typedef struct LinkedMapElement LinkedMapElement;
 typedef struct LinkedMap LinkedMap;
