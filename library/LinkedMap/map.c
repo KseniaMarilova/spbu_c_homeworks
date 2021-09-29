@@ -1,10 +1,10 @@
+#include "map.h"
+
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "../map.h"
 
 struct LinkedMapElement {
     char key[128];
