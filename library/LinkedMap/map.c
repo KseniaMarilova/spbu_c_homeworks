@@ -1,5 +1,4 @@
-#include "../library/LinkedMap/map.h"
-
+#include "map.h"
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
