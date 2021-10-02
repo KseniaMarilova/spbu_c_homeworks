@@ -7,13 +7,21 @@
 
 int main(int argc, char* argv[])
 {
-    LinkedMap* words = makeLinkedMap();
     FILE* input = fopen(argv[1], "r");
-    fillLinkedMap(input, words);
-    fclose(input);
-    FILE* output = fopen(argv[2], "w");
-    printLinkedMap(output, words);
-    fclose(output);
-    deleteLinkedmap(words);
+    if (!input)
+        printf("incorrect path to the input file");
+    else {
+        LinkedMap* words = makeLinkedMap();
+        fillLinkedMap(input, words);
+        fclose(input);
+        FILE* output = fopen(argv[2], "w");
+        if (!output)
+            printf("incorrect path to the output file");
+        else {
+            printLinkedMap(output, words);
+            fclose(output);
+        }
+        deleteLinkedmap(words);
+    }
     return 0;
 }
