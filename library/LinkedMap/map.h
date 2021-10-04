@@ -8,9 +8,8 @@
 typedef struct LinkedMapElement LinkedMapElement;
 typedef struct LinkedMap LinkedMap;
 
-LinkedMap* makeLinkedMap();
-int get(LinkedMap *map, char* key);
-void add(LinkedMap* map, char* key);
+LinkedMap* createLinkedMap();
+int get(LinkedMap* map, char* key, int defaultValue);
 void put(LinkedMap *map, char* key, int value);
 LinkedMapElement* find(LinkedMap* map, char* key);
 bool hasKey(LinkedMap* map, char* key);

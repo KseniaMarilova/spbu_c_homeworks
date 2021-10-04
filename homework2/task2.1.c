@@ -8,20 +8,26 @@
 int main(int argc, char* argv[])
 {
     FILE* input = fopen(argv[1], "r");
-    if (!input)
-        printf("incorrect path to the input file");
-    else {
-        LinkedMap* words = makeLinkedMap();
-        fillLinkedMap(input, words);
-        fclose(input);
-        FILE* output = fopen(argv[2], "w");
-        if (!output)
-            printf("incorrect path to the output file");
-        else {
-            printLinkedMap(output, words);
-            fclose(output);
-        }
-        deleteLinkedmap(words);
+    if (argc != 3) {
+        printf("wrong number of program arguments");
+        return 0;
     }
+    if (!input) {
+        printf("incorrect path to the input file");
+        return 0;
+    }
+    LinkedMap *words = createLinkedMap();
+    fillLinkedMap(input, words);
+    fclose(input);
+    FILE *output = fopen(argv[2], "w");
+    if (!output)
+        printf("incorrect path to the output file");
+    else {
+        printLinkedMap(output, words);
+        fclose(output);
+    }
+    deleteLinkedmap(words);
     return 0;
 }
+
+

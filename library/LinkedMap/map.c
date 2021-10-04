@@ -13,61 +13,54 @@ struct LinkedMapElement {
 
 struct LinkedMap {
     LinkedMapElement* head;
-    LinkedMapElement* tail;
 };
 
-LinkedMap* makeLinkedMap()
+LinkedMap* createLinkedMap()
 {
     LinkedMap* map = malloc(sizeof(LinkedMap));
     map->head = NULL;
     return map;
 }
 
-LinkedMapElement* makeLinkedMapElement(char* key)
+LinkedMapElement* createLinkedMapElement(char* key, int value)
 {
     LinkedMapElement* element = malloc(sizeof(LinkedMapElement));
     strcpy(element->key, key);
-    element->value = 1;
+    element->value = value;
     element->nextElement = NULL;
     return element;
 }
 
 void add(LinkedMap* map, char* key)
 {
-    LinkedMapElement* newElement = makeLinkedMapElement(key);
-    if (map->head == NULL)
-        map->head = newElement;
-    else {
-        newElement->nextElement = map->head;
-        map->head = newElement;
-    }
+    LinkedMapElement* newElement = createLinkedMapElement(key, 1);
+    newElement->nextElement = map->head;
+    map->head = newElement;
 }
 
 void put(LinkedMap* map, char* key, int value)
 {
-    if (!hasKey(map, key))
+    LinkedMapElement* e = find(map, key);
+    if (e)
+        e->value = value;
+    else
         add(map, key);
-    find(map, key)->value = value;
-    return;
 }
 
 LinkedMapElement* find(LinkedMap* map, char* key)
 {
-    LinkedMapElement* currentElement = map->head;
-    while (currentElement != NULL) {
-        if (!strcmp(currentElement->key, key))
-            return currentElement;
-        currentElement = currentElement->nextElement;
+    LinkedMapElement* current = map->head;
+    for (LinkedMapElement* current = map->head; current; current = current->nextElement) {
+        if (!strcmp(current->key, key))
+            return current;
     }
     return NULL;
 }
 
-int get(LinkedMap* map, char* key)
+int get(LinkedMap* map, char* key, int defaultValue)
 {
-    if (hasKey(map, key))
-        return find(map, key)->value;
-    else
-        return 0;
+    LinkedMapElement* e = find(map, key);
+    return e ? e->value : defaultValue;
 }
 
 bool hasKey(LinkedMap* map, char* key)
@@ -75,36 +68,37 @@ bool hasKey(LinkedMap* map, char* key)
     return find(map, key);
 }
 
+
+void deleteLinkedmap(LinkedMap* linkedMap)
+{
+    if (linkedMap->head) {
+        LinkedMapElement *previous = linkedMap->head;
+        LinkedMapElement *current = linkedMap->head->nextElement;
+        while (current) {
+            free(previous);
+            previous = current;
+            current = current->nextElement;
+        }
+        free(previous);
+    }
+    free(linkedMap);
+}
+
 void fillLinkedMap(FILE* input, LinkedMap* linkedMap)
 {
     while (!feof(input)) {
         char key[128];
         fscanf(input, "%s", key);
-        put(linkedMap, key, get(linkedMap, key) + 1);
+        put(linkedMap, key, get(linkedMap, key, 0) + 1);
     }
-    return;
 }
 
 void printLinkedMap(FILE* output, LinkedMap* linkedMap)
 {
+
     LinkedMapElement* currentElement = linkedMap->head;
-    while (currentElement != NULL) {
+    while (currentElement) {
         fprintf(output, "%s,%d\n", currentElement->key, currentElement->value);
         currentElement = currentElement->nextElement;
     }
-    return;
-}
-
-void deleteLinkedmap(LinkedMap* linkedMap)
-{
-    LinkedMapElement* previous = linkedMap->head;
-    LinkedMapElement* current = linkedMap->head->nextElement;
-    while (current != NULL) {
-        free(previous);
-        previous = current;
-        current = current->nextElement;
-    }
-    free(previous);
-    free(linkedMap);
-    return;
 }
