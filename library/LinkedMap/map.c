@@ -62,7 +62,7 @@ void deleteLinkedmap(LinkedMap* linkedMap)
 {
     if (linkedMap->head) {
         LinkedMapElement* previous = linkedMap->head;
-        LinkedMapElement* gcurrent = linkedMap->head->nextElement;
+        LinkedMapElement* current = linkedMap->head->nextElement;
         while (current) {
             free(previous->key);
             free(previous);
