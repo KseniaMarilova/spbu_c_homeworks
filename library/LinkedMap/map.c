@@ -5,16 +5,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-struct LinkedMapElement {
-    char key[128];
-    int value;
-    LinkedMapElement* nextElement;
-};
-
-struct LinkedMap {
-    LinkedMapElement* head;
-};
-
 LinkedMap* createLinkedMap()
 {
     LinkedMap* map = malloc(sizeof(LinkedMap));

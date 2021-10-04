@@ -7,7 +7,14 @@
 
 typedef struct LinkedMapElement LinkedMapElement;
 typedef struct LinkedMap LinkedMap;
-
+struct LinkedMapElement {
+    char key[128];
+    int value;
+    LinkedMapElement* nextElement;
+};
+struct LinkedMap {
+    LinkedMapElement* head;
+};
 LinkedMap* createLinkedMap();
 int get(LinkedMap* map, char* key, int defaultValue);
 void put(LinkedMap* map, char* key, int value);
