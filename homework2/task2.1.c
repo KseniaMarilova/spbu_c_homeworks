@@ -16,10 +16,10 @@ int main(int argc, char* argv[])
         printf("incorrect path to the input file");
         return 0;
     }
-    LinkedMap *words = createLinkedMap();
+    LinkedMap* words = createLinkedMap();
     fillLinkedMap(input, words);
     fclose(input);
-    FILE *output = fopen(argv[2], "w");
+    FILE* output = fopen(argv[2], "w");
     if (!output)
         printf("incorrect path to the output file");
     else {
@@ -29,5 +29,3 @@ int main(int argc, char* argv[])
     deleteLinkedmap(words);
     return 0;
 }
-
-
