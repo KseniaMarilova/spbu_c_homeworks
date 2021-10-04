@@ -82,22 +82,3 @@ void deleteLinkedmap(LinkedMap* linkedMap)
     }
     free(linkedMap);
 }
-
-void fillLinkedMap(FILE* input, LinkedMap* linkedMap)
-{
-    while (!feof(input)) {
-        char key[128];
-        fscanf(input, "%s", key);
-        put(linkedMap, key, get(linkedMap, key, 0) + 1);
-    }
-}
-
-void printLinkedMap(FILE* output, LinkedMap* linkedMap)
-{
-
-    LinkedMapElement* currentElement = linkedMap->head;
-    while (currentElement) {
-        fprintf(output, "%s,%d\n", currentElement->key, currentElement->value);
-        currentElement = currentElement->nextElement;
-    }
-}

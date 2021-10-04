@@ -5,6 +5,25 @@
 #include <stdlib.h>
 #include <string.h>
 
+void fillLinkedMap(FILE* input, LinkedMap* linkedMap)
+{
+    while (!feof(input)) {
+        char key[128];
+        fscanf(input, "%s", key);
+        put(linkedMap, key, get(linkedMap, key, 0) + 1);
+    }
+}
+
+void printLinkedMap(FILE* output, LinkedMap* linkedMap)
+{
+
+    LinkedMapElement* currentElement = linkedMap->head;
+    while (currentElement) {
+        fprintf(output, "%s,%d\n", currentElement->key, currentElement->value);
+        currentElement = currentElement->nextElement;
+    }
+}
+
 int main(int argc, char* argv[])
 {
     FILE* input = fopen(argv[1], "r");
