@@ -8,7 +8,7 @@
 typedef struct LinkedMapElement LinkedMapElement;
 typedef struct LinkedMap LinkedMap;
 struct LinkedMapElement {
-    char key[128];
+    char* key;
     int value;
     LinkedMapElement* nextElement;
 };
