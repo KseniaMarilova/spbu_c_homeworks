@@ -15,7 +15,7 @@ LinkedMap* createLinkedMap()
 LinkedMapElement* createLinkedMapElement(char* key, int value)
 {
     LinkedMapElement* element = malloc(sizeof(LinkedMapElement));
-    strcpy(element->key, key);
+    element->key = strdup(key);
     element->value = value;
     element->nextElement = NULL;
     return element;
@@ -30,9 +30,9 @@ void add(LinkedMap* map, char* key)
 
 void put(LinkedMap* map, char* key, int value)
 {
-    LinkedMapElement* e = find(map, key);
-    if (e)
-        e->value = value;
+    LinkedMapElement* element = find(map, key);
+    if (element)
+        element->value = value;
     else
         add(map, key);
 }
@@ -49,8 +49,8 @@ LinkedMapElement* find(LinkedMap* map, char* key)
 
 int get(LinkedMap* map, char* key, int defaultValue)
 {
-    LinkedMapElement* e = find(map, key);
-    return e ? e->value : defaultValue;
+    LinkedMapElement* element = find(map, key);
+    return element ? element->value : defaultValue;
 }
 
 bool hasKey(LinkedMap* map, char* key)
@@ -61,13 +61,15 @@ bool hasKey(LinkedMap* map, char* key)
 void deleteLinkedmap(LinkedMap* linkedMap)
 {
     if (linkedMap->head) {
-        LinkedMapElement* previous = linkedMap->head;
-        LinkedMapElement* current = linkedMap->head->nextElement;
+        LinkedMapElement *previous = linkedMap->head;
+        LinkedMapElement *current = linkedMap->head->nextElement;
         while (current) {
+            free(previous->key);
             free(previous);
             previous = current;
             current = current->nextElement;
         }
+        free(previous->key);
         free(previous);
     }
     free(linkedMap);

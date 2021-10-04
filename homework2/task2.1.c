@@ -7,11 +7,9 @@
 
 void fillLinkedMap(FILE* input, LinkedMap* linkedMap)
 {
-    while (!feof(input)) {
-        char key[128];
-        fscanf(input, "%s", key);
+    char key[128];
+    while (fscanf(input, "%s", key) != EOF)
         put(linkedMap, key, get(linkedMap, key, 0) + 1);
-    }
 }
 
 void printLinkedMap(FILE* output, LinkedMap* linkedMap)
