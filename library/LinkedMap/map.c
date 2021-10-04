@@ -61,8 +61,8 @@ bool hasKey(LinkedMap* map, char* key)
 void deleteLinkedmap(LinkedMap* linkedMap)
 {
     if (linkedMap->head) {
-        LinkedMapElement *previous = linkedMap->head;
-        LinkedMapElement *current = linkedMap->head->nextElement;
+        LinkedMapElement* previous = linkedMap->head;
+        LinkedMapElement* gcurrent = linkedMap->head->nextElement;
         while (current) {
             free(previous->key);
             free(previous);
