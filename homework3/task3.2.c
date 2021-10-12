@@ -1,11 +1,9 @@
 #include <math.h>
 #include <stdio.h>
 
-int main()
+void printNormalizedForm(double number)
 {
-    double mantissa = 0;
-    printf("Enter a number:");
-    scanf("%lf", &mantissa);
+    double mantissa = number;
     int exponent = 0;
     while (fabs(mantissa) < 1) {
         mantissa *= 2;
@@ -18,6 +16,15 @@ int main()
     char mantissaSign = '+';
     if (mantissa < 0)
         mantissaSign = '-';
-    printf("Result: %c%g*2^%d\n", mantissaSign, fabs(mantissa), exponent);
+    printf("%c%g*2^%d", mantissaSign, fabs(mantissa), exponent);
+}
+
+int main()
+{
+    double number = 0;
+    printf("Enter a number:");
+    scanf("%lf", &number);
+    printf("Result: ");
+    printNormalizedForm(number);
     return 0;
 }
