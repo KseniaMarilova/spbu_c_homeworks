@@ -27,7 +27,7 @@ bool* minus(bool* binary)
     binary = inverse(binary);
     bool* one = calloc(SIZE, sizeof(bool));
     one[0] = 1;
-    bool* result  = add(binary, one);
+    bool* result = add(binary, one);
     free(one);
     return result;
 }
@@ -70,7 +70,7 @@ int binaryToDecimal(bool* binary)
 
 void printBinary(bool* binary)
 {
-    for (int i = SIZE - 1;  i >= 0; i--) {
+    for (int i = SIZE - 1; i >= 0; i--) {
         printf("%d", binary[i]);
     }
 }
