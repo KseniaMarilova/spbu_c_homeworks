@@ -88,4 +88,3 @@ int binaryToDecimal(bool* binary)
     decimal = decimal * sign;
     return decimal;
 }
-
