@@ -23,7 +23,7 @@ int main()
     printBinary(firstBinary);
     printf("\nsecond number in binary code (two's complement): ");
     printBinary(secondBinary);
-    bool* product= multiply(firstBinary, secondBinary);
+    bool* product = multiply(firstBinary, secondBinary);
     printf("\nproduct of numbers in binary code (two's complement): ");
     printBinary(product);
     printf("\nproduct of numbers in decimal code: ");
