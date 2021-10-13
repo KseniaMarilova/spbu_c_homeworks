@@ -52,6 +52,14 @@ bool* decimalToBinary(int decimal)
     return binary;
 }
 
+int pow(int x, int y)
+{
+    int result = 1;
+    for (int i = 0; i < y; i++) {
+        result *= x;
+    }
+    return result;
+}
 int binaryToDecimal(bool* binary)
 {
     int decimal = 0;
@@ -64,7 +72,7 @@ int binaryToDecimal(bool* binary)
         binary = inverse(binary);
     }
     for (int i = 0; i < SIZE - 2; i++)
-        decimal += (int)pow(2, i) * binary[i];
+        decimal += pow(2, i) * binary[i];
     decimal = decimal * sign;
     return decimal;
 }
