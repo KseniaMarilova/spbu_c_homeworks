@@ -23,7 +23,7 @@ int main()
     printBinary(firstBinary);
     printf("\nsecond number in binary code (two's complement): ");
     printBinary(secondBinary);
-    bool* sum = multiply(firstBinary, secondBinary);
+    bool* sum = add(firstBinary, secondBinary);
     printf("\nsum of numbers in binary code (two's complement): ");
     printBinary(sum);
     printf("\nsum of numbers in decimal code: ");
