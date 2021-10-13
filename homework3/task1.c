@@ -64,7 +64,7 @@ int binaryToDecimal(bool* binary)
         binary = inverse(binary);
     }
     for (int i = 0; i < SIZE - 2; i++)
-        decimal += pow(2, i) * binary[i];
+        decimal += (int)pow(2, i) * binary[i];
     decimal = decimal * sign;
     return decimal;
 }
