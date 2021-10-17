@@ -25,7 +25,8 @@ void modifyDna(char* command, List* list, List* argument1, List* argument2)
     return;
 }
 
-void printDna(FILE* output, List* line) {
+void printDna(FILE* output, List* line)
+{
     for (ListElement* current = line->head->next; current; current = current->next)
         fprintf(output, "%c", current->symbol);
     fprintf(output, "\n");
