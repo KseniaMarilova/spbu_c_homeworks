@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
-struct Range{
+struct Range {
     ListElement* start;
     ListElement* end;
 };
@@ -46,18 +46,18 @@ void pushBack(List* line, char symbol)
 
 Range* find(List* fragment, ListElement* start)
 {
-    ListElement* currentLineElement = start;
+    ListElement* currentListElement = start;
     for (ListElement* currentStart = start; currentStart->next; currentStart = currentStart->next) {
         ListElement* fragmentEnd = fragment->head;
-        currentLineElement = currentStart;
-        for (ListElement *currentFragmentElement = fragment->head; currentFragmentElement->next && currentLineElement->next; currentFragmentElement = currentFragmentElement->next) {
-            if (currentFragmentElement->next->symbol != currentLineElement->next->symbol)
+        currentListElement = currentStart;
+        for (ListElement* current = fragment->head; current->next && currentListElement->next; current = current->next) {
+            if (current->next->symbol != currentListElement->next->symbol)
                 break;
-            currentLineElement = currentLineElement->next;
+            currentListElement = currentListElement->next;
             fragmentEnd = fragmentEnd->next;
         }
         if (!fragmentEnd->next)
-            return createRange(currentStart, currentLineElement);
+            return createRange(currentStart, currentListElement);
     }
     return NULL;
 }
@@ -65,7 +65,7 @@ Range* find(List* fragment, ListElement* start)
 void freeRangeOfList(Range* range)
 {
     ListElement* next = NULL;
-    for (ListElement* current = range->start->next; current != range->end; current  = next) {
+    for (ListElement* current = range->start->next; current != range->end; current = next) {
         next = current->next;
         free(current);
     }
@@ -82,7 +82,7 @@ bool insert(List* list, List* start, List* fragment)
     return true;
 }
 
-bool delete(List* list, List* start, List* end)
+bool delete (List* list, List* start, List* end)
 {
     Range* foundStart = find(start, list->head);
     Range* foundEnd = find(end, foundStart->end);
@@ -111,7 +111,7 @@ bool replace(List* list, List* template, List* fragment)
 void deleteList(List* list)
 {
     ListElement* next = NULL;
-    for (ListElement* current = list->head; current; current  = next) {
+    for (ListElement* current = list->head; current; current = next) {
         next = current->next;
         free(current);
     }

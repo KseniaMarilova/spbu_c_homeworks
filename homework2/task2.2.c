@@ -7,7 +7,7 @@
 void modifyDna(char* command, List* list, List* argument1, List* argument2)
 {
     if (!strcmp("DELETE", command)) {
-        if (!delete(list, argument1, argument2))
+        if (!delete (list, argument1, argument2))
             printf("deletion error");
         return;
     }
@@ -20,13 +20,12 @@ void modifyDna(char* command, List* list, List* argument1, List* argument2)
         if (!replace(list, argument1, argument2))
             printf("replace error");
         return;
-    }
-    else
+    } else
         printf("incorrect command");
     return;
 }
 
-void printDna(FILE* output, List* line){
+void printDna(FILE* output, List* line) {
     for (ListElement* current = line->head->next; current; current = current->next)
         fprintf(output, "%c", current->symbol);
     fprintf(output, "\n");
