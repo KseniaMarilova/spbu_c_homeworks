@@ -21,9 +21,9 @@ LinkedMapElement* createLinkedMapElement(char* key, int value)
     return element;
 }
 
-void add(LinkedMap* map, char* key)
+void add(LinkedMap* map, char* key, int value)
 {
-    LinkedMapElement* newElement = createLinkedMapElement(key, 1);
+    LinkedMapElement* newElement = createLinkedMapElement(key, value);
     newElement->nextElement = map->head;
     map->head = newElement;
 }
@@ -34,7 +34,7 @@ void put(LinkedMap* map, char* key, int value)
     if (element)
         element->value = value;
     else
-        add(map, key);
+        add(map, key, value);
 }
 
 LinkedMapElement* find(LinkedMap* map, char* key)
@@ -60,17 +60,11 @@ bool hasKey(LinkedMap* map, char* key)
 
 void deleteLinkedmap(LinkedMap* linkedMap)
 {
-    if (linkedMap->head) {
-        LinkedMapElement* previous = linkedMap->head;
-        LinkedMapElement* current = linkedMap->head->nextElement;
-        while (current) {
-            free(previous->key);
-            free(previous);
-            previous = current;
-            current = current->nextElement;
-        }
-        free(previous->key);
-        free(previous);
+    LinkedMapElement* next = NULL;
+    for (LinkedMapElement* current = linkedMap->head; current; current = next) {
+        next = current->nextElement;
+        free(current->key);
+        free(current);
     }
     free(linkedMap);
 }

@@ -14,12 +14,8 @@ void fillLinkedMap(FILE* input, LinkedMap* linkedMap)
 
 void printLinkedMap(FILE* output, LinkedMap* linkedMap)
 {
-
-    LinkedMapElement* currentElement = linkedMap->head;
-    while (currentElement) {
-        fprintf(output, "%s,%d\n", currentElement->key, currentElement->value);
-        currentElement = currentElement->nextElement;
-    }
+    for (LinkedMapElement* current = linkedMap->head; current; current = current->nextElement)
+        fprintf(output, "%s,%d\n", current->key, current->value);
 }
 
 int main(int argc, char* argv[])
