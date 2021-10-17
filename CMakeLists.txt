@@ -13,3 +13,7 @@ add_executable(task1.2 homework1/task1.2.c)
 add_executable(task1.3 homework1/task1.3.c)
 add_executable(task1.4 homework1/task1.4.c)
 add_executable(task1.5 homework1/task1.5.c)
+
+add_library(list STATIC library/ListOfChar/list.c)
+add_executable(task2.2 homework2/task2.2.c)
+target_link_libraries(task2.2 list)
