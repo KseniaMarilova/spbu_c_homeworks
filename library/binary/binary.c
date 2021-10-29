@@ -78,7 +78,6 @@ int binaryToDecimal(bool* binary)
 {
     int decimal = 0;
     if (binary[SIZE - 1]) {
-        sign = -1;
         bool* minusOne = decimalToBinary(-1);
         bool* binaryMinusOne = add(binary, minusOne);
         free(minusOne);
