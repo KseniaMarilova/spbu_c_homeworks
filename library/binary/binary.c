@@ -67,7 +67,9 @@ bool* decimalToBinary(int decimal)
         i++;
     }
     if (sign < 0) {
-        binary = minus(binary);
+        bool* minusBinary = minus(binary);
+        free(binary);
+        return minusBinary;
     }
     return binary;
 }
@@ -75,16 +77,18 @@ bool* decimalToBinary(int decimal)
 int binaryToDecimal(bool* binary)
 {
     int decimal = 0;
-    int sign = 1;
     if (binary[SIZE - 1]) {
         sign = -1;
         bool* minusOne = decimalToBinary(-1);
-        binary = add(binary, minusOne);
+        bool* binaryMinusOne = add(binary, minusOne);
         free(minusOne);
-        binary = inverse(binary);
+        binaryMinusOne = inverse(binaryMinusOne);
+        for (int i = 0; i < SIZE - 2; i++)
+            decimal += binaryMinusOne[i] << i;
+        free(binaryMinusOne);
+        return decimal * -1;
     }
     for (int i = 0; i < SIZE - 2; i++)
         decimal += binary[i] << i;
-    decimal = decimal * sign;
     return decimal;
 }
