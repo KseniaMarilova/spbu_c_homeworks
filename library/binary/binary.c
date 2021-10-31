@@ -14,28 +14,6 @@ bool* add(bool* firstBinary, bool* secondBinary)
     return result;
 }
 
-bool* bitShiftLeft(bool* binary, int positions)
-{
-    bool* result = calloc(SIZE, sizeof(bool));
-    for (int i = 0; i < SIZE - positions; i++)
-        result[i + positions] = binary[i];
-    return result;
-}
-
-bool* multiply(bool* a, bool* b)
-{
-    bool* result = calloc(SIZE, sizeof(bool));
-    bool* temporary = calloc(SIZE, sizeof(bool));
-    for (int j = 0; j < SIZE; j++) {
-        for (int i = 0; i < SIZE; i++)
-            temporary[i] = a[i] & b[j];
-        temporary = bitShiftLeft(temporary, j);
-        result = add(result, temporary);
-    }
-    free(temporary);
-    return result;
-}
-
 bool* inverse(bool* binary)
 {
     for (int i = 0; i < SIZE; i++)
@@ -90,4 +68,28 @@ int binaryToDecimal(bool* binary)
     for (int i = 0; i < SIZE - 2; i++)
         decimal += binary[i] << i;
     return decimal;
+}
+
+void bitShiftLeft(bool* binary, int positions)
+{
+    for (int i = SIZE - positions - 1; i >= 0; i--)
+        binary[i + positions] = binary[i];
+    for (int i = 0; i < positions; i++)
+        binary[i] = 0;
+}
+
+bool* multiply(bool* a, bool* b)
+{
+    bool* result = calloc(SIZE, sizeof(bool));
+    bool* temporary = calloc(SIZE, sizeof(bool));
+    for (int j = 0; j < SIZE; j++) {
+        for (int i = 0; i < SIZE; i++)
+            temporary[i] = a[i] & b[j];
+        bitShiftLeft(temporary, j);
+        bool* oldResult = result;
+        result = add(oldResult, temporary);
+        free(oldResult);
+    }
+    free(temporary);
+    return result;
 }
