@@ -9,6 +9,7 @@ set(SOURCE_LIB
 add_library(library ${SOURCE_LIB})
 add_library(map STATIC library/LinkedMap/map.c)
 add_library(binary STATIC library/binary/binary.c)
+add_library(list STATIC library/ListOfChar/list.c)
 
 add_executable(task1.1 homework1/task1.1.c)
 add_executable(task1.2 homework1/task1.2.c)
@@ -25,6 +26,5 @@ add_executable(task3.2 homework3/task3.2.c)
 add_executable(task3.3 homework3/task3.3.c)
 target_link_libraries(task3.3 binary)
 
-add_library(list STATIC library/ListOfChar/list.c)
 add_executable(task2.2 homework2/task2.2.c)
 target_link_libraries(task2.2 list)
