@@ -59,7 +59,6 @@ Range* find(List* fragment, ListElement* start)
             return createRange(currentStart, listPointer);
     }
     return NULL;
-
 }
 
 void freeRangeOfList(Range* range)
@@ -79,7 +78,7 @@ bool insert(List* list, List* start, List* fragment)
     ListElement* previous = found->end;
     ListElement* end = found->end->next;
     for (ListElement* pointer = fragment->head->next; pointer; pointer = pointer->next) {
-        ListElement *current = createListElement(pointer->symbol);
+        ListElement* current = createListElement(pointer->symbol);
         previous->next = current;
         previous = current;
     }
