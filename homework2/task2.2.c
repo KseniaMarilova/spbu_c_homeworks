@@ -9,20 +9,14 @@ void modifyDna(char* command, List* list, List* argument1, List* argument2)
     if (!strcmp("DELETE", command)) {
         if (!delete (list, argument1, argument2))
             printf("deletion error");
-        return;
-    }
-    if (!strcmp("INSERT", command)) {
+    } else if (!strcmp("INSERT", command)) {
         if (!insert(list, argument1, argument2))
             printf("insert error");
-        return;
-    }
-    if (!strcmp("REPLACE", command)) {
+    } else if (!strcmp("REPLACE", command)) {
         if (!replace(list, argument1, argument2))
             printf("replace error");
-        return;
     } else
         printf("incorrect command");
-    return;
 }
 
 void printDna(FILE* output, List* line)
@@ -71,6 +65,8 @@ int main(int argc, char* argv[])
         List* argument2 = readDna(input);
         modifyDna(command, dnaList, argument1, argument2);
         printDna(output, dnaList);
+        deleteList(argument1);
+        deleteList(argument2);
     }
     deleteList(dnaList);
     fclose(input);
