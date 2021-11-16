@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int getFibonacñi(int number)
+int getFibonacci(int number)
 {
     int previous = 0;
     int current = 1;
