@@ -49,4 +49,3 @@ int main()
     free(mergedArray);
     return 0;
 }
-
