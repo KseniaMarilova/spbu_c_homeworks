@@ -18,6 +18,6 @@ int main()
     printf("enter the number of the fibonacci");
     int number = 0;
     scanf("%d", &number);
-    printf("%dth fibonacci number: %d", number, getFibonacñi(number));
+    printf("%dth fibonacci number: %d", number, getFibonacci(number));
     return 0;
 }
