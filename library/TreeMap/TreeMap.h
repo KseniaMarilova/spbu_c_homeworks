@@ -1,7 +1,7 @@
 #ifndef AVLTREES_AVLTREE_H
 #define AVLTREES_AVLTREE_H
 
-#include "value.h"
+#include "../Value/Value.h"
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -27,7 +27,7 @@ TreeMap* createTreeMap(ValueType keyType, ValueType dataType);
 void deleteTreeMap(TreeMap* map);
 void put(TreeMap* map, Value key, Value data);
 void removeKey(TreeMap* map, Value key);
-Value get(TreeMap* map, Value key);
+Value get(Node* node, Value key);
 bool hasKey(TreeMap* map, Value key);
 Value getLowerBound(TreeMap* map, Value key);
 Value getUpperBound(TreeMap* map, Value key);

@@ -1,18 +1,21 @@
-#include "value.h"
-#include "avltree.h"
+#include "../library/Value/Value.h"
+#include "../library/TreeMap/TreeMap.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
 void addSize(TreeMap* stock, int size, int count)
 {
-    int actualCount = getInt(get(stock, wrapInt(size)));
+    Value found = get(stock->root, wrapInt(size));
+    int actualCount = 0;
+    if (!isNone(found))
+        actualCount = getInt(found);
     put(stock, wrapInt(size), wrapInt(actualCount + count));
 }
 
 int getCount(TreeMap* stock, int size)
 {
-    Value result = get(stock, wrapInt(size));
+    Value result = get(stock->root, wrapInt(size));
     return isNone(result) ? 0 : getInt(result);
 }
 
@@ -21,7 +24,7 @@ int selectSize(TreeMap* stock, int size)
     Value foundSize = getLowerBound(stock, wrapInt(size));
     if (isNone(foundSize))
         return -1;
-    int count = getInt(get(stock, foundSize));
+    int count = getInt(get(stock->root, foundSize));
     if (count == 1)
         removeKey(stock, foundSize);
     else
@@ -29,47 +32,88 @@ int selectSize(TreeMap* stock, int size)
     return getInt(foundSize);
 }
 
+void printTreeMap(FILE* output, Node* root)
+{
+    if (root) {
+        printTreeMap(output, root->leftChild);
+        fprintf(output, "%d %d\n", getInt(root->key), getInt(root->data));
+        printTreeMap(output, root->rightChild);
+    }
+}
+
+bool checkInput(FILE* file1, FILE* file2, FILE* file3, FILE* file4)
+{
+    if (!file1) {
+        printf("incorrect path to the shop balance file");
+        return false;
+    }
+    if (!file2) {
+        printf("incorrect path to the logList file");
+        return false;
+    }
+    if (!file3) {
+        printf("incorrect path to the output file");
+        return false;
+    }
+    if (!file4) {
+        printf("incorrect path to the output file");
+        return false;
+    }
+    return true;
+}
+
+void readTreeMap(FILE* input, TreeMap* map)
+{
+    int size = 0, count = 0;
+    while (fscanf(input, "%d %d", &size, &count) != EOF)
+        put(map, wrapInt(size), wrapInt(count));
+}
+
+void readLog(FILE* logList, FILE* results, TreeMap* stock)
+{
+    char command[10] = "";
+    fscanf(logList, "%s", command);
+    if (!strcmp("ADD", command)) {
+        int size = 0, count = 0;
+        fscanf(logList, "%d %d", &size, &count);
+        addSize(stock, size, count);
+    } else if (!strcmp("GET", command)) {
+        int size = 0;
+        fscanf(logList, "%d", &size);
+        fprintf(results, "%d\n", size);
+    } else if (!strcmp("SELECT", command)) {
+        int size = 0;
+        fscanf(logList, "%d", &size);
+        int foundSize = selectSize(stock, size);
+        if (foundSize == -1)
+            fprintf(results, "Sorry\n");
+        else
+            fprintf(results, "%d\n", foundSize);
+    }
+}
+
 int main(int argc, char* argv[])
 {
-    FILE* balance = fopen(argv[1], "r");
-    FILE* logList = fopen(argv[2], "r");
-    if (argc != 3) {
+    if (argc != 5) {
         printf("wrong number of program arguments");
-        return 0;
+        return false;
     }
-    if (!balance) {
-        printf("incorrect path to the balance file");
+    FILE* startBalance = fopen(argv[1], "r");
+    FILE* logList = fopen(argv[2], "r");
+    FILE* results = fopen(argv[3], "w");
+    FILE* finalBalance = fopen(argv[4], "w");
+    if (!checkInput(startBalance, logList, results, finalBalance))
         return 0;
-    }
-    if (!logList) {
-        printf("incorrect path to the logList file");
-        return 0;
-    }
     TreeMap* stock = createTreeMap(INT_TYPE, INT_TYPE);
-    int size, count;
-    while (fscanf(balance, "%d %d", &size, &count) != EOF)
-        put(stock, wrapInt(size), wrapInt(count));
-    fclose(balance);
+    readTreeMap(startBalance, stock);
+    fclose(startBalance);
     int n = 0;
-    char command[10];
     fscanf(logList, "%d", &n);
-    for (int i = 0; i < n; i++) {
-        fscanf(logList, "%s", command);
-        if (!strcmp("ADD", command)) {
-            fscanf(logList, "%d %d", &size, &count);
-            addSize(stock, size, count);
-        } else if (!strcmp("GET", command)) {
-            fscanf(logList, "%d", &size);
-            printf("%d\n", getCount(stock, size));
-        } else if (!strcmp("SELECTED", command)) {
-            fscanf(logList, "%d", &size);
-            int foundSize = selectSize(stock, size);
-            if (foundSize == -1)
-                printf("Sorry");
-            else
-                printf("%d\n", foundSize);
-        }
-    }
+    for (int i = 0; i < n; i++)
+        readLog(logList, results, stock);
     fclose(logList);
+    fclose(results);
+    printTreeMap(finalBalance, stock->root);
     deleteTreeMap(stock);
+    return 0;
 }

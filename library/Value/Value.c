@@ -1,5 +1,4 @@
-#include "value.h"
-
+#include "Value.h"
 #include <assert.h>
 #include <stdint.h>
 #include <string.h>
@@ -41,7 +40,7 @@ Value wrapNone()
 
 int getInt(Value value)
 {
-   // assertType(value, INT_TYPE);
+    assertType(value, INT_TYPE);
     return value.intValue;
 }
 
@@ -95,16 +94,16 @@ int compare(Value first, Value second)
     if (first.type != second.type)
         return first.type - second.type;
     switch (first.type) {
-        case INT_TYPE:
-            return compareInt(first.intValue, second.intValue);
-        case DOUBLE_TYPE:
-            return compareDouble(first.doubleValue, second.doubleValue);
-        case STRING_TYPE:
-            return strcmp(first.stringValue, second.stringValue);
-        case POINTER_TYPE:
-            return comparePointer(first.pointerValue, second.pointerValue);
-        case NONE_TYPE:
-            return 0;
+    case INT_TYPE:
+        return compareInt(first.intValue, second.intValue);
+    case DOUBLE_TYPE:
+        return compareDouble(first.doubleValue, second.doubleValue);
+    case STRING_TYPE:
+        return strcmp(first.stringValue, second.stringValue);
+    case POINTER_TYPE:
+        return comparePointer(first.pointerValue, second.pointerValue);
+    case NONE_TYPE:
+        return 0;
     }
     assert(false);
     return 0;

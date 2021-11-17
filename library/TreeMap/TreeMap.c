@@ -1,5 +1,5 @@
-#include "value.h"
-#include "avltree.h"
+#include "../Value/Value.h"
+#include "TreeMap.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -120,7 +120,6 @@ void put(TreeMap* map, Value key, Value data)
         printf("wrong types");
 }
 
-
 typedef struct Pair {
     Node* first;
     Node* second;
@@ -178,9 +177,8 @@ void removeKey(TreeMap* map, Value key)
     map->root = removeNode(map->root, key);
 }
 
-Value get(TreeMap* map, Value key)
+Value get(Node* root, Value key)
 {
-    Node* root = map->root;
     if (!root)
         return wrapNone();
     if (compare(root->key, key) > 0)
