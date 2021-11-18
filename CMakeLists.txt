@@ -24,3 +24,5 @@ add_executable(task3.2 homework3/task3.2.c)
 
 add_executable(task3.3 homework3/task3.3.c)
 target_link_libraries(task3.3 binary)
+
+add_executable(test2.2 test2/test2.2.c)
