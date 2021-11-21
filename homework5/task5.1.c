@@ -1,7 +1,7 @@
 #include "../library/TreeMap/TreeMap.h"
+#include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 
 void addSize(TreeMap* stock, int size, int count)
 {

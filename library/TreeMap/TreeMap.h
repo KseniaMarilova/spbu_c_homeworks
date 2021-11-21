@@ -2,8 +2,8 @@
 #define AVLTREES_AVLTREE_H
 
 #include "../Value/Value.h"
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 typedef struct Node Node;
 typedef struct TreeMap TreeMap;

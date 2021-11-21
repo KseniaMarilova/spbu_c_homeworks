@@ -1,7 +1,6 @@
 #include "TreeMap.h"
-#include <stdio.h>
-#include <stdlib.h>
 #include <stdbool.h>
+#include <stdlib.h>
 
 struct Node {
     Value key;
