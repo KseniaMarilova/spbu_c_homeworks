@@ -5,17 +5,9 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef struct TreeMap TreeMap;
 typedef struct Node Node;
+typedef struct TreeMap TreeMap;
 typedef struct TreeMapIterator TreeMapIterator;
-
-struct Node {
-    Value key;
-    Value data;
-    int height;
-    Node* leftChild;
-    Node* rightChild;
-} ;
 
 struct TreeMap {
     ValueType keyType;
@@ -34,5 +26,10 @@ Value getUpperBound(TreeMap* map, Value key);
 Value getMaximum(TreeMap* map);
 Value getMinimum(TreeMap* map);
 
+TreeMapIterator* getIterator(TreeMap* map);
+Value getKey(TreeMapIterator* iterator);
+Value getValue(TreeMapIterator* iterator);
+void next(TreeMapIterator* iterator);
+bool hasElement(TreeMapIterator* iterator);
 
 #endif //AVLTREES_AVLTREE_H

@@ -32,13 +32,14 @@ int selectSize(TreeMap* stock, int size)
     return getInt(foundSize);
 }
 
-void printTreeMap(FILE* output, Node* root)
+void printTreeMap(FILE* output, TreeMap* map)
 {
-    if (root) {
-        printTreeMap(output, root->leftChild);
-        fprintf(output, "%d %d\n", getInt(root->key), getInt(root->data));
-        printTreeMap(output, root->rightChild);
+    TreeMapIterator* iterator = getIterator(map);
+    while (hasElement(iterator)) {
+        fprintf(output, "%d %d\n", getInt(getKey(iterator)), getInt(getValue(iterator)));
+        next(iterator);
     }
+    freeTreeMapIterator(iterator);
 }
 
 bool checkInput(FILE* file1, FILE* file2, FILE* file3, FILE* file4)
@@ -113,7 +114,7 @@ int main(int argc, char* argv[])
         readLog(logList, results, stock);
     fclose(logList);
     fclose(results);
-    printTreeMap(finalBalance, stock->root);
+    printTreeMap(finalBalance, stock);
     deleteTreeMap(stock);
     return 0;
 }

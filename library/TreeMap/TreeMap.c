@@ -4,6 +4,13 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+struct Node {
+    Value key;
+    Value data;
+    int height;
+    Node* leftChild;
+    Node* rightChild;
+};
 
 TreeMap* createTreeMap(ValueType keyType, ValueType dataType)
 {
@@ -45,14 +52,17 @@ int getHeight(Node* node)
     return node ? node->height : 0;
 }
 
-int maxA(int a, int b)
+void updateHeight(Node* node)
 {
-    return a > b ? a : b;
-}
+    if (node) {
+        int leftHeight = getHeight(node->leftChild);
+        int rightHeight = getHeight(node->rightChild);
+        if (leftHeight > rightHeight)
+            node->height = leftHeight + 1;
+        else
+            node->height = rightHeight + 1;
 
-void updateHeight(Node* node){
-    if (node)
-        node->height = maxA(getHeight(node->leftChild), getHeight(node->rightChild)) + 1;
+    }
 }
 
 int getBalanceFactor(Node* node)
@@ -116,8 +126,6 @@ void put(TreeMap* map, Value key, Value data)
 {
     if (map->keyType == key.type && map->dataType == data.type)
         map->root = insert(map->root, key, data);
-    else
-        printf("wrong types");
 }
 
 typedef struct Pair {
@@ -243,4 +251,66 @@ Value getMinimum(TreeMap* map)
     while (current->leftChild)
         current = current->leftChild;
     return current->key;
+}
+
+struct TreeMapIterator {
+    Node** parent;
+    Node* pointer;
+    int length;
+};
+
+TreeMapIterator* getIterator(TreeMap* map)
+{
+    TreeMapIterator* iterator = malloc(sizeof(TreeMapIterator));
+    iterator->pointer = map->root;
+    iterator->parent = malloc((map->root->height + 1) * sizeof(Node*));
+    iterator->length = 0;
+    if (!map->root)
+        return iterator;
+    while (iterator->pointer->leftChild) {
+        iterator->parent[iterator->length] = iterator->pointer;
+        iterator->length++;
+        iterator->pointer = iterator->pointer->leftChild;
+    }
+    return iterator;
+}
+
+Value getKey(TreeMapIterator* iterator)
+{
+    return iterator->pointer->key;
+}
+
+Value getValue(TreeMapIterator* iterator)
+{
+    return iterator->pointer->data;
+}
+
+void next(TreeMapIterator* iterator)
+{
+    if (!iterator->pointer->rightChild && !iterator->length) {
+        iterator->pointer = NULL;
+        return;
+    }
+    if (!iterator->pointer->rightChild && iterator->length) {
+        iterator->pointer = iterator->parent[iterator->length - 1];
+        iterator->length--;
+    } else {
+        iterator->pointer = iterator->pointer->rightChild;
+        while (iterator->pointer->leftChild) {
+            iterator->parent[iterator->length] = iterator->pointer;
+            iterator->length++;
+            iterator->pointer = iterator->pointer->leftChild;
+        }
+    }
+}
+
+bool hasElement(TreeMapIterator* iterator)
+{
+    return iterator->pointer;
+}
+
+void freeTreeMapIterator(TreeMapIterator* iterator)
+{
+    free(iterator->parent);
+    free(iterator);
 }
