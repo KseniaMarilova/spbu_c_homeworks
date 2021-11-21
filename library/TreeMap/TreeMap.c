@@ -1,5 +1,5 @@
-#include "../Value/Value.h"
 #include "TreeMap.h"
+#include "../Value/Value.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -61,7 +61,6 @@ void updateHeight(Node* node)
             node->height = leftHeight + 1;
         else
             node->height = rightHeight + 1;
-
     }
 }
 
@@ -92,14 +91,12 @@ Node* rotateLeft(Node* root)
 
 Node* balance(Node* root)
 {
-    if (getBalanceFactor(root) == 2)
-    {
+    if (getBalanceFactor(root) == 2) {
         if (getBalanceFactor(root->rightChild) == -1)
             root->rightChild = rotateRight(root->rightChild);
         return rotateLeft(root);
     }
-    if (getBalanceFactor(root) == -2)
-    {
+    if (getBalanceFactor(root) == -2) {
         if (getBalanceFactor(root->leftChild) == 1)
             root->leftChild = rotateLeft(root->leftChild);
         return rotateRight(root);
@@ -230,7 +227,6 @@ Value getUpperBound(TreeMap* map, Value key)
         }
     }
     return previous ? previous->key : wrapNone();
-
 }
 
 Value getMaximum(TreeMap* map)
