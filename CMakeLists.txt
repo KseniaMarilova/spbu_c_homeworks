@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.16)
 project(spbu_c_homeworks C)
 
 set(CMAKE_C_STANDARD 11)
@@ -9,6 +9,9 @@ set(SOURCE_LIB
 add_library(library ${SOURCE_LIB})
 add_library(map STATIC library/LinkedMap/map.c)
 add_library(binary STATIC library/binary/binary.c)
+add_library(value STATIC library/Value/Value.c)
+add_library(listOfValue STATIC library/ListOfValue/list.c)
+add_library(hashTable STATIC library/HashTable/hashTable.c library/ListOfValue/list.c)
 
 add_executable(task1.1 homework1/task1.1.c)
 add_executable(task1.2 homework1/task1.2.c)
@@ -26,3 +29,6 @@ add_executable(task3.3 homework3/task3.3.c)
 target_link_libraries(task3.3 binary)
 
 add_executable(test2.2 test2/test2.2.c)
+
+add_executable(task6.1 homework6/task6.1.c)
+target_link_libraries(task6.1 value listOfValue hashTable)
