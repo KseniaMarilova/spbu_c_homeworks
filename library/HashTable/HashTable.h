@@ -1,8 +1,8 @@
 #ifndef HASHMAP_HASHTABLE_H
 #define HASHMAP_HASHTABLE_H
 
+#include "../ListOfValue/list.h"
 #include <stdbool.h>
-#include "list.h"
 #include <stdint.h>
 
 #define START_SIZE 32
@@ -19,12 +19,11 @@ typedef struct HashTable{
 } HashTable;
 
 HashTable* createHashTable(Comparator comparator, HashFunction hashfunction);
-bool hasHashKey(HashTable* table, Value key);
-HashTable* putHash(HashTable* table, Value key, Value data);
-Value getHash(HashTable* table, Value key);
-Pair removeHashKey(HashTable* table, Value key);
+bool hashKeyInHashTable(HashTable* table, Value key);
+HashTable* putToHashTable(HashTable* table, Value key, Value data);
+Value getValueInHashTable(HashTable* table, Value key);
+Pair removeKeyInHashTable(HashTable* table, Value key);
 void deleteHashTable(HashTable* table);
-int getSize(HashTable* table);
 
 typedef struct HashTableIterator{
     ListElement* pointer;

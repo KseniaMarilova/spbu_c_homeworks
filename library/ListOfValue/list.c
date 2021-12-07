@@ -1,6 +1,5 @@
 #include "list.h"
 #include <stdlib.h>
-#include <stdio.h>
 
 ListElement* createListElement(Value key, Value data)
 {
@@ -60,7 +59,6 @@ void put(List* list, Value key, Value data)
         add(list, key, data);
 }
 
-
 Pair removeKey(List* list, Value key)
 {
     Pair pair;
@@ -88,7 +86,7 @@ Pair removeKey(List* list, Value key)
     return pair;
 }
 
-Value getData(List* list, Value key)
+Value get(List* list, Value key)
 {
     ListElement* element = findKey(list, key);
     return element ? element->data : wrapNone();

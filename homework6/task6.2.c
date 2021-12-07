@@ -1,7 +1,7 @@
-#include "HashTable.h"
+#include "../library/HashTable/HashTable.h"
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
+#include <string.h>
 
 int compareCoordinates(Value first, Value second)
 {
@@ -20,34 +20,6 @@ uint32_t hashFunction(Value key)
     uint32_t y1 = 0;
     memcpy(&y1, &y, 4);
     return x1 ^ y1;
-}
-
-
-int printList(List* list)
-{
-    int i = 0;
-    for (ListElement* c = list->head; c; c = c->next) {
-        Pair* pair = getPointer(c->key);
-        printf("%f:%f %d;  ", getDouble(pair->key), getDouble(pair->data), getInt(c->data));
-        i++;
-    }
-    return i;
-}
-
-double outputHashTable(HashTable* table)
-{
-    int max = 0;
-    int cols = 0;
-    for (int i = 0; i < table->nBuckets; i++) {
-        printf("\n%d bucket ", i);
-        int j = printList(table->bucket[i]);
-        if (j > 1)
-            cols++;
-        if (j > max)
-            max = j;
-    }
-    printf("max collisia: %d, n cols: %d, nElements: %d, quality: %f\n", max, cols, table->nElements, (double) cols / table->nBuckets);
-    return (double) cols / table->nBuckets;
 }
 
 int main(int argc, char* argv[])
@@ -78,7 +50,7 @@ int main(int argc, char* argv[])
             Pair* pair = malloc(sizeof(Pair));
             pair->key = wrapDouble(x);
             pair->data = wrapDouble(y);
-            table = putHash(table, wrapPointer(pair), wrapInt(index));
+            table = putToHashTable(table, wrapPointer(pair), wrapInt(index));
         }
         if (!strcmp(command, "GET")) {
             fscanf(input, "%lf", &x);
@@ -86,16 +58,16 @@ int main(int argc, char* argv[])
             Pair* pair = malloc(sizeof(Pair));
             pair->key = wrapDouble(x);
             pair->data = wrapDouble(y);
-            Value found = getHash(table, wrapPointer(pair));
-            if (isNone(found))
+            Value attempt = getValueInHashTable(table, wrapPointer(pair));
+            if (isNone(attempt))
                 printf("not found");
             else
-                fprintf(output, "%d\n", getInt(found));
+                fprintf(output, "%d\n", getInt(attempt));
             free(pair);
         }
 
     }
-      HashTableIterator* iterator = getIterator(table);
+    HashTableIterator* iterator = getIterator(table);
     while (iterator->pointer) {
         Pair pair = getIteratorValue(iterator);
         free(getPointer(pair.key));

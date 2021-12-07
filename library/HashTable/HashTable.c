@@ -1,7 +1,6 @@
 #include "HashTable.h"
-#include "list.h"
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 
@@ -20,11 +19,10 @@ HashTable* createHashTable(Comparator comparator, HashFunction hashFunction)
 
 double getLoadFactor(HashTable* table)
 {
-   // printf("load factor %d\n", table->nElements / table->nBuckets);
     return (double) table->nElements / (double) table->nBuckets;
 }
 
-bool hasHashKey(HashTable* table, Value key)
+bool hashKeyInHashTable(HashTable* table, Value key)
 {
     int hash = table->hashFunction(key) % table->nBuckets;
     return hasKey(table->bucket[hash], key);
@@ -32,24 +30,21 @@ bool hasHashKey(HashTable* table, Value key)
 
 HashTable* moveToBig(HashTable* table);
 
-HashTable* putHash(HashTable* table, Value key, Value data)
+HashTable* putToHashTable(HashTable* table, Value key, Value data)
 {
     if (getLoadFactor(table) >= LOAD_FACTOR)
         table = moveToBig(table);
- //   printf("put: nbuckets: %d, key: %d\n", table->nBuckets, getInt(key));
     int hash = table->hashFunction(key) % table->nBuckets;
     if (!hasKey(table->bucket[hash], key))
         table->nElements++;
-    else
-        printf("alredy is");
     put(table->bucket[hash], key, data);
     return table;
 }
 
-Value getHash(HashTable* table, Value key)
+Value getValueInHashTable(HashTable* table, Value key)
 {
     int hash = table->hashFunction(key) % table->nBuckets;
-    return getData(table->bucket[hash], key);
+    return get(table->bucket[hash], key);
 }
 
 void deleteHashTable(HashTable* table)
@@ -64,7 +59,7 @@ Pair removeHashKey(HashTable* table, Value key)
 {
     int hash = table->hashFunction(key) % table->nBuckets;
     Pair pair = removeKey(table->bucket[hash], key);
-    return pair ;
+    return pair;
 }
 
 HashTableIterator* getIterator(HashTable* table)
