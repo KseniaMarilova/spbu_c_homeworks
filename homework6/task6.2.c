@@ -65,7 +65,6 @@ int main(int argc, char* argv[])
                 fprintf(output, "%d\n", getInt(attempt));
             free(pair);
         }
-
     }
     HashTableIterator* iterator = getIterator(table);
     while (iterator->pointer) {

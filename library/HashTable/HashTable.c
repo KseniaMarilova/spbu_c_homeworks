@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-
 HashTable* createHashTable(Comparator comparator, HashFunction hashFunction)
 {
     HashTable* new = malloc(sizeof(HashTable));
@@ -19,7 +18,7 @@ HashTable* createHashTable(Comparator comparator, HashFunction hashFunction)
 
 double getLoadFactor(HashTable* table)
 {
-    return (double) table->nElements / (double) table->nBuckets;
+    return (double)(table->nElements / table->nBuckets);
 }
 
 bool hashKeyInHashTable(HashTable* table, Value key)
@@ -125,4 +124,3 @@ HashTable* moveToBig(HashTable* table)
     deleteHashTable(table);
     return new;
 }
-
