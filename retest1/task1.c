@@ -54,7 +54,8 @@ void printComplex(Complex a)
         printf("%lf", a.im);
 }
 
-int main() {
+int main()
+{
     Complex firstNumber, secondNumber;
     firstNumber.re = 0;
     firstNumber.im = 0;
