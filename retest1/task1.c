@@ -49,7 +49,7 @@ void printComplex(Complex a)
     if (a.re)
         printf("%lf", a.re);
     if (a.re && a.im < 0)
-        printf("+", a.re, a.im);
+        printf("+");
     if (a.im)
         printf("%lf", a.im);
 }
