@@ -10,12 +10,11 @@ struct Node {
     Node* rightChild;
 };
 
-TreeMap* createTreeMap(ValueType keyType, ValueType dataType)
+TreeMap* createTreeMap(Comparator comparator)
 {
     TreeMap* new = malloc(sizeof(TreeMap));
     new->root = NULL;
-    new->dataType = dataType;
-    new->keyType = keyType;
+    new->comparator = comparator;
     return new;
 };
 
@@ -102,14 +101,14 @@ Node* balance(Node* root)
     return root;
 }
 
-Node* insert(Node* root, Value key, Value data)
+Node* insert(Node* root, Value key, Value data, Comparator comparator)
 {
     if (!root)
         return createNode(data, key);
-    if (compare(root->key, key) > 0)
-        root->leftChild = insert(root->leftChild, key, data);
-    else if (compare(root->key, key) < 0)
-        root->rightChild = insert(root->rightChild, key, data);
+    if (comparator(root->key, key) > 0)
+        root->leftChild = insert(root->leftChild, key, data, comparator);
+    else if (comparator(root->key, key) < 0)
+        root->rightChild = insert(root->rightChild, key, data, comparator);
     else
         root->data = data;
     updateHeight(root);
@@ -119,8 +118,7 @@ Node* insert(Node* root, Value key, Value data)
 
 void put(TreeMap* map, Value key, Value data)
 {
-    if (map->keyType == key.type && map->dataType == data.type)
-        map->root = insert(map->root, key, data);
+     map->root = insert(map->root, key, data, map->comparator);
 }
 
 typedef struct Pair {
@@ -143,17 +141,17 @@ Pair extractMax(Node* root)
     return makePair(root, root->leftChild);
 }
 
-Node* removeNode(Node* root, Value key)
+Node* removeNode(Node* root, Value key, Comparator comparator)
 {
     if (!root)
         return NULL;
-    if (compare(root->key, key) > 0) {
-        root->leftChild = removeNode(root->leftChild, key);
+    if (comparator(root->key, key) > 0) {
+        root->leftChild = removeNode(root->leftChild, key, comparator);
         updateHeight(root);
         root = balance(root);
         return root;
-    } else if (compare(root->key, key) < 0) {
-        root->rightChild = removeNode(root->rightChild, key);
+    } else if (comparator(root->key, key) < 0) {
+        root->rightChild = removeNode(root->rightChild, key, comparator);
         updateHeight(root);
         root = balance(root);
         return root;
@@ -177,24 +175,29 @@ Node* removeNode(Node* root, Value key)
 
 void removeKey(TreeMap* map, Value key)
 {
-    map->root = removeNode(map->root, key);
+    map->root = removeNode(map->root, key, map->comparator);
 }
 
-Value get(Node* root, Value key)
+Value getValue(Node* root, Value key, Comparator comparator)
 {
     if (!root)
         return wrapNone();
-    if (compare(root->key, key) > 0)
-        return get(root->leftChild, key);
-    else if (compare(root->key, key) < 0)
-        return get(root->rightChild, key);
+    if (comparator(root->key, key) > 0)
+        return getValue(root->leftChild, key, comparator);
+    else if (comparator(root->key, key) < 0)
+        return getValue(root->rightChild, key, comparator);
     else
         return root->data;
 }
 
+Value get(TreeMap* map, Value key)
+{
+    return getValue(map->root, key, map->comparator);
+}
+
 bool hasKey(TreeMap* map, Value key)
 {
-    return isNone(get(map->root, key));
+    return isNone(get(map, key));
 }
 
 Value getLowerBound(TreeMap* map, Value key)
@@ -202,7 +205,7 @@ Value getLowerBound(TreeMap* map, Value key)
     Node* previous = NULL;
     Node* current = map->root;
     while (current) {
-        if (compare(current->key, key) < 0)
+        if (map->comparator(current->key, key) < 0)
             current = current->rightChild;
         else {
             previous = current;
@@ -217,7 +220,7 @@ Value getUpperBound(TreeMap* map, Value key)
     Node* previous = NULL;
     Node* current = map->root;
     while (current) {
-        if (compare(current->key, key) <= 0)
+        if (map->comparator(current->key, key) <= 0)
             current = current->rightChild;
         else {
             previous = current;
@@ -269,12 +272,12 @@ TreeMapIterator* getIterator(TreeMap* map)
     return iterator;
 }
 
-Value getKey(TreeMapIterator* iterator)
+Value getIteratorKey(TreeMapIterator* iterator)
 {
     return iterator->pointer->key;
 }
 
-Value getValue(TreeMapIterator* iterator)
+Value getIteratorValue(TreeMapIterator* iterator)
 {
     return iterator->pointer->data;
 }

@@ -21,6 +21,8 @@ typedef struct Value {
     };
 } Value;
 
+typedef int (*Comparator)(Value, Value);
+
 Value wrapInt(int value);
 Value wrapDouble(double value);
 Value wrapString(char* value);

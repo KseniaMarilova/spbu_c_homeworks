@@ -10,16 +10,15 @@ typedef struct TreeMap TreeMap;
 typedef struct TreeMapIterator TreeMapIterator;
 
 struct TreeMap {
-    ValueType keyType;
-    ValueType dataType;
+    Comparator comparator;
     Node* root;
 };
 
-TreeMap* createTreeMap(ValueType keyType, ValueType dataType);
+TreeMap* createTreeMap(Comparator comparator);
 void deleteTreeMap(TreeMap* map);
 void put(TreeMap* map, Value key, Value data);
 void removeKey(TreeMap* map, Value key);
-Value get(Node* node, Value key);
+Value get(TreeMap* map, Value key);
 bool hasKey(TreeMap* map, Value key);
 Value getLowerBound(TreeMap* map, Value key);
 Value getUpperBound(TreeMap* map, Value key);
@@ -27,8 +26,8 @@ Value getMaximum(TreeMap* map);
 Value getMinimum(TreeMap* map);
 
 TreeMapIterator* getIterator(TreeMap* map);
-Value getKey(TreeMapIterator* iterator);
-Value getValue(TreeMapIterator* iterator);
+Value getIteratorKey(TreeMapIterator* iterator);
+Value getIteratorValue(TreeMapIterator* iterator);
 void next(TreeMapIterator* iterator);
 bool hasElement(TreeMapIterator* iterator);
 

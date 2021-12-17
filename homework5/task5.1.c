@@ -5,7 +5,7 @@
 
 void addSize(TreeMap* stock, int size, int count)
 {
-    Value found = get(stock->root, wrapInt(size));
+    Value found = get(stock, wrapInt(size));
     int actualCount = 0;
     if (!isNone(found))
         actualCount = getInt(found);
@@ -14,7 +14,7 @@ void addSize(TreeMap* stock, int size, int count)
 
 int getCount(TreeMap* stock, int size)
 {
-    Value result = get(stock->root, wrapInt(size));
+    Value result = get(stock, wrapInt(size));
     return isNone(result) ? 0 : getInt(result);
 }
 
@@ -23,7 +23,7 @@ int selectSize(TreeMap* stock, int size)
     Value foundSize = getLowerBound(stock, wrapInt(size));
     if (isNone(foundSize))
         return -1;
-    int count = getInt(get(stock->root, foundSize));
+    int count = getInt(get(stock, foundSize));
     if (count == 1)
         removeKey(stock, foundSize);
     else
@@ -35,7 +35,7 @@ void printTreeMap(FILE* output, TreeMap* map)
 {
     TreeMapIterator* iterator = getIterator(map);
     while (hasElement(iterator)) {
-        fprintf(output, "%d %d\n", getInt(getKey(iterator)), getInt(getValue(iterator)));
+        fprintf(output, "%d %d\n", getInt(getIteratorKey(iterator)), getInt(getIteratorValue(iterator)));
         next(iterator);
     }
     freeTreeMapIterator(iterator);
@@ -104,7 +104,7 @@ int main(int argc, char* argv[])
     FILE* finalBalance = fopen(argv[4], "w");
     if (!checkInput(startBalance, logList, results, finalBalance))
         return 0;
-    TreeMap* stock = createTreeMap(INT_TYPE, INT_TYPE);
+    TreeMap* stock = createTreeMap(compare);
     readTreeMap(startBalance, stock);
     fclose(startBalance);
     int n = 0;
@@ -115,5 +115,7 @@ int main(int argc, char* argv[])
     fclose(results);
     printTreeMap(finalBalance, stock);
     deleteTreeMap(stock);
+    TreeMap* stock1 = createTreeMap(compare);
+    deleteTreeMap(stock1);
     return 0;
 }
