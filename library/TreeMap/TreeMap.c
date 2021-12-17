@@ -118,7 +118,7 @@ Node* insert(Node* root, Value key, Value data, Comparator comparator)
 
 void put(TreeMap* map, Value key, Value data)
 {
-     map->root = insert(map->root, key, data, map->comparator);
+    map->root = insert(map->root, key, data, map->comparator);
 }
 
 typedef struct Pair {
