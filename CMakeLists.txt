@@ -29,3 +29,6 @@ target_link_libraries(task3.3 binary)
 
 add_executable(task5.1 homework5/task5.1.c)
 target_link_libraries(task5.1 Value TreeMap)
+
+add_executable(test2.2 test2/test2.2.c)
+add_executable(retest1.2 retest1/task2.c)
