@@ -115,7 +115,5 @@ int main(int argc, char* argv[])
     fclose(results);
     printTreeMap(finalBalance, stock);
     deleteTreeMap(stock);
-    TreeMap* stock1 = createTreeMap(compare);
-    deleteTreeMap(stock1);
     return 0;
 }

@@ -136,6 +136,7 @@ Pair extractMax(Node* root)
     if (root->rightChild) {
         Pair pair = extractMax(root->rightChild);
         root->rightChild = pair.second;
+        balance(root);
         return makePair(pair.first, root);
     }
     return makePair(root, root->leftChild);
@@ -256,6 +257,17 @@ struct TreeMapIterator {
     int length;
 };
 
+void goLeft(TreeMapIterator* iterator)
+{
+    if (!iterator)
+        return;
+    while (iterator->pointer->leftChild) {
+        iterator->parent[iterator->length] = iterator->pointer;
+        iterator->length++;
+        iterator->pointer = iterator->pointer->leftChild;
+    }
+}
+
 TreeMapIterator* getIterator(TreeMap* map)
 {
     TreeMapIterator* iterator = malloc(sizeof(TreeMapIterator));
@@ -264,11 +276,7 @@ TreeMapIterator* getIterator(TreeMap* map)
     iterator->length = 0;
     if (!map->root)
         return iterator;
-    while (iterator->pointer->leftChild) {
-        iterator->parent[iterator->length] = iterator->pointer;
-        iterator->length++;
-        iterator->pointer = iterator->pointer->leftChild;
-    }
+    goLeft(iterator);
     return iterator;
 }
 
@@ -293,11 +301,7 @@ void next(TreeMapIterator* iterator)
         iterator->length--;
     } else {
         iterator->pointer = iterator->pointer->rightChild;
-        while (iterator->pointer->leftChild) {
-            iterator->parent[iterator->length] = iterator->pointer;
-            iterator->length++;
-            iterator->pointer = iterator->pointer->leftChild;
-        }
+        goLeft(iterator);
     }
 }
 
