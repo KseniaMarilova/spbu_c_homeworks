@@ -28,3 +28,7 @@ target_link_libraries(task3.3 binary)
 add_executable(test2.2 test2/test2.2.c)
 
 add_executable(retest1.2 retest1/task2.c)
+
+add_library(heap STATIC homework7/heap.c)
+add_executable(task7.1 homework7/task7.1.c)
+target_link_libraries(task7.1 heap)
