@@ -9,6 +9,8 @@ set(SOURCE_LIB
 add_library(library ${SOURCE_LIB})
 add_library(map STATIC library/LinkedMap/map.c)
 add_library(binary STATIC library/binary/binary.c)
+add_library(Value STATIC library/Value/Value.c)
+add_library(TreeMap library/TreeMap/TreeMap.c)
 
 add_executable(task1.1 homework1/task1.1.c)
 add_executable(task1.2 homework1/task1.2.c)
@@ -25,6 +27,8 @@ add_executable(task3.2 homework3/task3.2.c)
 add_executable(task3.3 homework3/task3.3.c)
 target_link_libraries(task3.3 binary)
 
-add_executable(test2.2 test2/test2.2.c)
+add_executable(task5.1 homework5/task5.1.c)
+target_link_libraries(task5.1 Value TreeMap)
 
+add_executable(test2.2 test2/test2.2.c)
 add_executable(retest1.2 retest1/task2.c)
