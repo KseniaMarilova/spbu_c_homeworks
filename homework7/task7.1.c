@@ -1,7 +1,7 @@
 #include "heap.h"
+#include <limits.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <limits.h>
 
 void getPath(int* p, int i, int start, int* path, int* k)
 {
@@ -10,7 +10,7 @@ void getPath(int* p, int i, int start, int* path, int* k)
         path[0] = start;
         return;
     }
-    getPath(p, p[i], start, path,  k);
+    getPath(p, p[i], start, path, k);
     (*k)++;
     path[*k] = i;
 }
@@ -26,7 +26,7 @@ int dijkstra(int** graph, int nVertexes, int start, int finish, int* path, int* 
         previous[i] = -1;
     }
     value[start] = 0;
-    insert(heap, (Pair) { 0, start } );
+    insert(heap, (Pair) { 0, start });
 
     while (heap->size > 0) {
         Pair pair = extractMin(heap);
