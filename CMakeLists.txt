@@ -32,3 +32,6 @@ target_link_libraries(task5.1 Value TreeMap)
 
 add_executable(test2.2 test2/test2.2.c)
 add_executable(retest1.2 retest1/task2.c)
+
+add_executable(final1 final/task1.c)
+target_link_libraries(final1 Value TreeMap)
