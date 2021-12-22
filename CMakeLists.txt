@@ -9,6 +9,9 @@ set(SOURCE_LIB
 add_library(library ${SOURCE_LIB})
 add_library(map STATIC library/LinkedMap/map.c)
 add_library(binary STATIC library/binary/binary.c)
+add_library(ListOfValue library/ListOfValue/list.c)
+add_library(Value library/Value/Value.c)
+add_library(HashTable library/HashTable/HashTable.c library/ListOfValue/list.c)
 
 add_executable(task1.1 homework1/task1.1.c)
 add_executable(task1.2 homework1/task1.2.c)
@@ -26,5 +29,8 @@ add_executable(task3.3 homework3/task3.3.c)
 target_link_libraries(task3.3 binary)
 
 add_executable(test2.2 test2/test2.2.c)
+
+add_executable(task6.2 homework6/task6.2.c)
+target_link_libraries(task6.2 Value ListOfValue HashTable)
 
 add_executable(retest1.2 retest1/task2.c)
