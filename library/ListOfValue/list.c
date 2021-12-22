@@ -70,13 +70,13 @@ Pair removeKey(List* list, Value key)
                 previous->next = current->next;
             else
                 list->head = current->next;
-            Pair pair = {current->key, current->data};
+            Pair pair = { current->key, current->data };
             free(current);
             return pair;
         }
         previous = current;
     }
-    Pair pair = {wrapNone(), wrapNone()};
+    Pair pair = { wrapNone(), wrapNone() };
     return pair;
 }
 
