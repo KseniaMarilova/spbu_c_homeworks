@@ -50,39 +50,33 @@ bool hasKey(List* list, Value key)
     return findKey(list, key);
 }
 
-void put(List* list, Value key, Value data)
+bool put(List* list, Value key, Value data)
 {
     ListElement* element = findKey(list, key);
-    if (element)
+    if (element) {
         element->data = data;
-    else
-        add(list, key, data);
+        return true;
+    }
+    add(list, key, data);
+    return false;
 }
 
 Pair removeKey(List* list, Value key)
 {
-    Pair pair;
-    if (!list->comparator(list->head->key, key)) {
-        ListElement* temporary = list->head;
-        list->head = list->head->next;
-        pair.key = temporary->key;
-        pair.data = temporary->data;
-        free(temporary);
-        return pair;
-    }
-    ListElement* current = list->head->next;
-    for (ListElement* previous = list->head; previous->next; previous = previous->next) {
-        ListElement* current = previous->next;
+    ListElement* previous = NULL;
+    for (ListElement* current = list->head; current; current = current->next) {
         if (!list->comparator(current->key, key)) {
-            previous->next = current->next;
-            pair.key = current->key;
-            pair.data = current->data;
+            if (previous)
+                previous->next = current->next;
+            else
+                list->head = current->next;
+            Pair pair = {current->key, current->data};
             free(current);
             return pair;
         }
+        previous = current;
     }
-    pair.key = wrapNone();
-    pair.data = wrapNone();
+    Pair pair = {wrapNone(), wrapNone()};
     return pair;
 }
 

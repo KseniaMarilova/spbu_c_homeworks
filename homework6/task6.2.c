@@ -16,10 +16,14 @@ uint32_t hashFunction(Value key)
     double x = getDouble(coordinate->key);
     uint32_t x1 = 0;
     memcpy(&x1, &x, 4);
+    uint64_t x2 = 0;
+    memcpy(&x2, &x, 8);
     double y = getDouble(coordinate->data);
     uint32_t y1 = 0;
     memcpy(&y1, &y, 4);
-    return x1 ^ y1;
+    uint64_t y2 = 0;
+    memcpy(&y2, &y, 8);
+    return (x1 ^ (x2 >> 32)) ^ (y1 ^ (y2 >> 32));
 }
 
 int main(int argc, char* argv[])
@@ -50,7 +54,7 @@ int main(int argc, char* argv[])
             Pair* pair = malloc(sizeof(Pair));
             pair->key = wrapDouble(x);
             pair->data = wrapDouble(y);
-            table = putToHashTable(table, wrapPointer(pair), wrapInt(index));
+            putToHashTable(table, wrapPointer(pair), wrapInt(index));
         }
         if (!strcmp(command, "GET")) {
             fscanf(input, "%lf", &x);

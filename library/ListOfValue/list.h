@@ -28,7 +28,7 @@ struct Pair{
 List* createList(Comparator comparator);
 void deleteList(List* list);
 bool hasKey(List* list, Value key);
-void put(List* list, Value key, Value data);
+bool put(List* list, Value key, Value data);
 Pair removeKey(List* list, Value key);
 Value get(List* list, Value key);
 

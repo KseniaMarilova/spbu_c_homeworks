@@ -27,17 +27,15 @@ bool hashKeyInHashTable(HashTable* table, Value key)
     return hasKey(table->bucket[hash], key);
 }
 
-HashTable* moveToBig(HashTable* table);
+void moveToBig(HashTable* table);
 
-HashTable* putToHashTable(HashTable* table, Value key, Value data)
+void putToHashTable(HashTable* table, Value key, Value data)
 {
     if (getLoadFactor(table) >= LOAD_FACTOR)
-        table = moveToBig(table);
+        moveToBig(table);
     int hash = table->hashFunction(key) % table->nBuckets;
-    if (!hasKey(table->bucket[hash], key))
+    if (!put(table->bucket[hash], key, data))
         table->nElements++;
-    put(table->bucket[hash], key, data);
-    return table;
 }
 
 Value getValueInHashTable(HashTable* table, Value key)
@@ -58,6 +56,7 @@ Pair removeHashKey(HashTable* table, Value key)
 {
     int hash = table->hashFunction(key) % table->nBuckets;
     Pair pair = removeKey(table->bucket[hash], key);
+    table->nElements--;
     return pair;
 }
 
@@ -79,7 +78,7 @@ HashTableIterator* getIterator(HashTable* table)
 Pair getIteratorValue(HashTableIterator* iterator)
 {
     Pair pair;
-    if (iterator) {
+    if (iterator && iterator->pointer) {
         pair.key = iterator->pointer->key;
         pair.data = iterator->pointer->data;
     } else {
@@ -94,17 +93,18 @@ void next(HashTableIterator* iterator)
     if (iterator->pointer->next) {
         iterator->pointer = iterator->pointer->next;
         return;
-    } else
-        for (int i = iterator->position + 1; i < iterator->hashTable->nBuckets; i++)
-            if (iterator->hashTable->bucket[i]->head) {
-                iterator->pointer = iterator->hashTable->bucket[i]->head;
-                iterator->position = i;
-                return;
-            }
+    }
+    for (int i = iterator->position + 1; i < iterator->hashTable->nBuckets; i++) {
+        if (iterator->hashTable->bucket[i]->head) {
+            iterator->pointer = iterator->hashTable->bucket[i]->head;
+            iterator->position = i;
+            return;
+        }
+    }
     iterator->pointer = NULL;
 }
 
-HashTable* moveToBig(HashTable* table)
+void moveToBig(HashTable* table)
 {
     HashTable* new = malloc(sizeof(HashTable));
     new->nBuckets = table->nBuckets * 3;
@@ -121,6 +121,11 @@ HashTable* moveToBig(HashTable* table)
         put(new->bucket[hash], iterator->pointer->key, iterator->pointer->data);
         next(iterator);
     }
-    deleteHashTable(table);
-    return new;
+    free(iterator);
+    for (int i = 0; i < table->nBuckets; i++)
+        deleteList(table->bucket[i]);
+    table->bucket = new->bucket;
+    table->nBuckets = new->nBuckets;
+    table->nElements = new->nElements;
+    free(new);
 }

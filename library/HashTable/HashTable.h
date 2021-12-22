@@ -20,7 +20,7 @@ typedef struct HashTable{
 
 HashTable* createHashTable(Comparator comparator, HashFunction hashfunction);
 bool hashKeyInHashTable(HashTable* table, Value key);
-HashTable* putToHashTable(HashTable* table, Value key, Value data);
+void putToHashTable(HashTable* table, Value key, Value data);
 Value getValueInHashTable(HashTable* table, Value key);
 Pair removeKeyInHashTable(HashTable* table, Value key);
 void deleteHashTable(HashTable* table);
