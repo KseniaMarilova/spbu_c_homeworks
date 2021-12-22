@@ -32,3 +32,5 @@ add_executable(test2.2 test2/test2.2.c)
 
 add_executable(task6.2 homework6/task6.2.c)
 target_link_libraries(task6.2 Value ListOfValue HashTable)
+
+add_executable(retest1.2 retest1/task2.c)
