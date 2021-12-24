@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.17)
+cmake_minimum_required(VERSION 3.16)
 project(spbu_c_homeworks C)
 
 set(CMAKE_C_STANDARD 11)
@@ -30,4 +30,6 @@ target_link_libraries(task3.3 binary)
 
 add_executable(test2.2 test2/test2.2.c)
 add_executable(retest1.2 retest1/task2.c)
+
+add_executable(final2.1 final2/task1.c)
 
